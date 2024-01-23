@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Property Hero Image Display</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 50px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Property Hero Image Display</h2>
+
+    <label for="propertyUrl">Enter Property URL:</label>
+    <input
+      type="text"
+      id="propertyUrl"
+      placeholder="e.g., https://www.vrbo.com/2547035"
+    />
+    <button onclick="displayHeroImage()">Display Hero Image</button>
+
+    <div id="result"></div>
+
+    <script>
+      function displayHeroImage() {
+        const propertyUrlInput = document.getElementById("propertyUrl");
+        const propertyUrl = propertyUrlInput.value.trim();
+
+        // Check if the input is a valid URL
+        if (!isValidUrl(propertyUrl)) {
+          alert("Invalid URL. Please enter a valid property URL.");
+          return;
+        }
+
+        // Extract property ID from the URL
+        const propertyId = extractPropertyId(propertyUrl);
+
+        // Display hero image alongside the property ID
+        const resultContainer = document.getElementById("result");
+        resultContainer.innerHTML = `
+                <h3>Property ID: ${propertyId}</h3>
+                <img src="https://www.example.com/hero-images/${propertyId}.jpg" alt="Hero Image">
+            `;
+      }
+
+      // Function to check if a string is a valid URL
+      function isValidUrl(url) {
+        try {
+          new URL(url);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      // Function to extract property ID from the URL
+      function extractPropertyId(url) {
+        const urlParts = url.split("/");
+        const propertyIdIndex = urlParts.indexOf("vrbo.com") + 1;
+        return urlParts[propertyIdIndex];
+      }
+    </script>
+  </body>
+</html>
